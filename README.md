@@ -7,12 +7,15 @@ A full-stack mobile application with React Native (Expo) frontend and Flask back
 ```
 project/
 ├── backend/         # Flask API and data storage
-│   ├── app.py       # Flask server and Splunk integration
+│   ├── manage.py       # Flask server and Splunk integration
 │   ├── auth.json    # User authentication data
 │   ├── crud.json    # Task data storage
 ├── frontend/        # Expo React Native app
-│   ├── App.js       # Main application logic
-│   └── ...          # Additional frontend files
+│   ├── app/
+│   │   ├── index.tsx    
+│   │   └── api.tsx           # Additional frontend files   # Main application logic
+│   │   └── ...               # Additional frontend files
+│   
 ├── .gitattributes
 ├── .gitignore
 ├── LICENSE
@@ -25,7 +28,7 @@ project/
 - 📲 User registration and login
 - ✅ Create, Read, Update, Delete (CRUD) tasks
 - 📱 Captures device information using Expo APIs
-- 📡 Sends activity logs to backend
+- 📡 Sends activity logs to Splunk
 
 ### Backend (Flask)
 - 🧠 REST API for authentication and task management
@@ -56,7 +59,7 @@ pip install flask flask-cors requests
 python app.py
 ```
 
-> Ensure backend runs on your local IP (e.g., `http://0.0.0.0:5000`)
+> Ensure backend runs on your local IP (e.g., `http://localhost:8080`)
 
 ### Frontend Setup
 1. Navigate to frontend directory:
@@ -93,9 +96,9 @@ HEC_TOKEN = "<your-token>"
 ## 📊 Sample Splunk Queries
 
 ```
-index=main sourcetype=_json | where username!=""
-index=main sourcetype=_json | stats count by operation
-index=main sourcetype=_json | spath input=device.modelName | stats count by device.modelName
+host="Your local Ip address" | where username!=""
+host="Your local Ip address" | stats count by operation
+host="Your local Ip address" | spath input=device.modelName | stats count by device.modelName
 ```
 
 ## 🔐 Security Notes
@@ -107,7 +110,3 @@ index=main sourcetype=_json | spath input=device.modelName | stats count by devi
 ## 📄 License
 
 MIT License - See [LICENSE](LICENSE) file
-
-## 🙋 Questions?
-
-Open an issue or contribute to the project!

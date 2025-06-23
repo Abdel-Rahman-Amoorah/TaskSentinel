@@ -18,4 +18,4 @@ def manage():
 
 if __name__ == '__main__':
     manage()
-    app.run(host="192.168.1.197", port=8080)
+    app.run(host="Your local IP", port=8080)
