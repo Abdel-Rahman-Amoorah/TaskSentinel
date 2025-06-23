@@ -1,7 +1,8 @@
 import { router } from "expo-router";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
+import { useUser } from "./context";
 export default function Index() {
+  const { username, setUsername } = useUser();
   return (
     <View style={styles.container}>
       <View style={styles.headerImage}>
@@ -16,6 +17,9 @@ export default function Index() {
 
       <TouchableOpacity style={[styles.button, styles.secondaryButton]} onPress={() => router.push("/register")}>
         <Text style={styles.buttonText}>Register</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.button, styles.secondaryButton]} onPress={() => {setUsername("admin"); router.push("/homepage")}}>
+        <Text style={styles.buttonText}>backdoor</Text>
       </TouchableOpacity>
     </View>
   );

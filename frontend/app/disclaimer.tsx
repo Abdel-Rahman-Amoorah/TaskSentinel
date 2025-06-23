@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from "react-native";
-
+import { router } from "expo-router";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 export default function Disclaimer() {
   return (
     <View style={styles.container}>
@@ -13,6 +13,10 @@ export default function Disclaimer() {
       <Text style={styles.thankYou}>
         Therefore... thank you for feeding me data. 🙃
       </Text>
+
+      <TouchableOpacity onPress={() => router.push("/homepage")}>
+        <Text style={styles.paragraph}> to homepage</Text>
+      </TouchableOpacity>
     </View>
   );
 }

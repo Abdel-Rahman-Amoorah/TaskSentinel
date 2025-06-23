@@ -7,8 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
+import { handleTask } from "./API";
+import { useUser } from "./context";
 export default function Homepage() {
+  const { username } = useUser();
   const [selectedOperation, setSelectedOperation] = useState("");
   const [comment, setComment] = useState("");
 
@@ -17,16 +19,25 @@ export default function Homepage() {
     setComment(""); // Reset comment on new selection
   };
 
-  const handleSubmit = () => {
-    console.log(`Operation: ${selectedOperation}, Comment: ${comment}`);
-    // You could send this to your backend or Splunk
+  const handleSubmit = async () => {
+    // You could send this to your backend
+    if (!comment.trim()) {
+      alert("Please enter a comment before submitting.");
+      return;
+    }
+    const data = await handleTask(username,selectedOperation, comment);
+    if (data.error) {
+      alert(data.error);
+      return;
+    }
+    alert(`Comment submitted for ${selectedOperation}: ${comment}`);
     setSelectedOperation("");
     setComment("");
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Welcome to the Homepage!</Text>
+      <Text style={styles.title}>Welcome {username}</Text>
       <Text style={styles.subtitle}>Choose a CRUD Operation:</Text>
 
       <View style={styles.buttonsContainer}>

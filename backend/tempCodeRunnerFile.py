@@ -1,0 +1,1 @@
+CORS(app, resources={r"/*": {"origins": "*"}})  # Enable CORS for all routes

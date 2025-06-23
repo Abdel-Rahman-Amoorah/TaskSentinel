@@ -36,4 +36,7 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# JSON files for backend
+backend/*.json
+
 app-example

@@ -1,24 +1,36 @@
-import { router } from "expo-router";
+import { router } from "expo-router"; 
 import { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-
-export default function Register() {
+import { handleLogin } from "./API";
+import { useUser } from "./context";
+export default function Login() {
+  const {setUsername} = useUser()
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
-
-  const handleRegister = () => {
-    router.push("/homepage")
-    // Send registration data to backend and Splunk
-    console.log("User registered:", user);
+  const [error,setError] = useState(false);
+  
+  const handleLoginsub = async () => {
+    // Send login data to backend
+    const data = await handleLogin(user.username,user.password)
+    if (data === "Login successful") {
+      setError(false);
+      setUsername(user.username);
+      router.push("/homepage");
+      console.log("Login successful", data);
+    }
+    else {
+      setError(true);
+      alert("Login failed. user not found or password is incorrect.");
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Create an Account</Text>
-      <Text style={styles.subHeader}>Let's register and send data to our Splunk!</Text>
-
+      <Text style={styles.header}>Welcome Back!</Text>
+      <Text style={styles.subHeader}>Let's login and send data to our Splunk!</Text>
+      {error && <Text style={{ color: "red" }}>Login failed. Please try again.</Text>}
       <TextInput
         style={styles.input}
         placeholder="Username"
@@ -33,10 +45,12 @@ export default function Register() {
         onChangeText={(text) => setUser({ ...user, password: text })}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Create a New Account</Text>
+      <TouchableOpacity style={styles.button} onPress={handleLoginsub}>
+        <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-
+      <TouchableOpacity style={styles.button2} onPress={() => router.push("/register")}>
+        <Text style={styles.buttonText}>Create a new account</Text>
+      </TouchableOpacity>
       <Text style={styles.footer}>Made by Abdel-Rahman Amoorah</Text>
     </View>
   );
@@ -73,6 +87,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   button: {
+    backgroundColor: "#1e90ff",
+    paddingVertical: 14,
+    paddingHorizontal: 30,
+    borderRadius: 25,
+    width: "100%",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  button2: {
     backgroundColor: "#4caf50",
     paddingVertical: 14,
     paddingHorizontal: 30,
