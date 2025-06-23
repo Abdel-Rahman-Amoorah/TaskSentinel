@@ -87,7 +87,7 @@ eas build --platform android
 ## 🧠 Splunk HEC Configuration
 
 1. Create HEC token in Splunk
-2. Configure in `backend/app.py`:
+2. Configure in `backend/splunk.py`:
 ```python
 HEC_URL = "https://<your-splunk-ip>:8088/services/collector"
 HEC_TOKEN = "<your-token>"
