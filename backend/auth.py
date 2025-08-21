@@ -9,7 +9,7 @@ from flask_cors import CORS  # type: ignore
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})  # Enable CORS for all routes
 auth_file_path = os.path.join("backend", "auth.json")
-cred_file_path = os.path.join("backend", "cred.json")
+crud_file_path = os.path.join("backend", "crud.json")
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -30,9 +30,9 @@ def login():
     os.makedirs("backend", exist_ok=True)
 
     # --- Check if credentials exist in cred.json ---
-    if os.path.exists(cred_file_path):
+    if os.path.exists(crud_file_path):
         try:
-            with open(cred_file_path, 'r') as f:
+            with open(crud_file_path, 'r') as f:
                 creds = json.load(f)
         except json.JSONDecodeError:
             creds = []
@@ -140,9 +140,9 @@ def register():
         json.dump(auth_logs, f, indent=4)
 
     # Save credentials to cred.json
-    if os.path.exists(cred_file_path):
+    if os.path.exists(crud_file_path):
         try:
-            with open(cred_file_path, 'r') as f:
+            with open(crud_file_path, 'r') as f:
                 creds = json.load(f)
         except json.JSONDecodeError:
             creds = []
@@ -160,7 +160,7 @@ def register():
     }
     creds.append(cred_data)
 
-    with open(cred_file_path, 'w') as f:
+    with open(crud_file_path, 'w') as f:
         json.dump(creds, f, indent=4)
 
     # --- Send log entry to Splunk ---
