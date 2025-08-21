@@ -3,6 +3,7 @@
 # dependencies
 node_modules/
 
+
 # Expo
 .expo/
 dist/
@@ -38,5 +39,4 @@ yarn-error.*
 
 # JSON files for backend
 backend/*.json
-
-app-example
+backend/Test.py
